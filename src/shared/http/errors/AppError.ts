@@ -1,0 +1,3 @@
+class AppError {
+ // public
+}
