@@ -1,3 +1,4 @@
+import 'express-async-errors';
 import 'reflect-metadata';
 import express, { Request, Response, NextFunction } from 'express';
 import cors from 'cors';
@@ -28,5 +29,5 @@ app.use(
 );
 
 app.listen(3333, () => {
-  console.log('Server ON port 333');
+  console.log('Server ON port 3333');
 });
