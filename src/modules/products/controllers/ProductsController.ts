@@ -1,25 +1,21 @@
-import { Request, Response } from "express";
-import CreateProductService from "../services/CreateProductService";
-import DeleteProductService from "../services/DeleteProductService";
-import ListProductService from "../services/ListProductService";
-import ShowProductService from "../services/ShowProductService";
-import UpdateProductService from "../services/UpdateProductService";
+import { Request, Response } from 'express';
+import CreateProductService from '../services/CreateProductService';
+import DeleteProductService from '../services/DeleteProductService';
+import ListProductService from '../services/ListProductService';
+import ShowProductService from '../services/ShowProductService';
+import UpdateProductService from '../services/UpdateProductService';
 
 export default class ProductsController {
-
   public async index(request: Request, response: Response) {
     const listProducts = new ListProductService();
 
     const products = await listProducts.execute();
 
     return response.json(products);
-
   }
 
   public async show(request: Request, response: Response) {
-
     try {
-
       const { id } = request.params;
 
       const showProductService = new ShowProductService();
@@ -27,35 +23,24 @@ export default class ProductsController {
       const product = await showProductService.execute({ id });
 
       return response.json(product);
-    }
-    catch (e: any) {
-      console.log(e.message)
+    } catch (e: any) {
+      console.log(e.message);
     }
   }
-
 
   public async create(request: Request, response: Response) {
+    const { name, price, quantity } = request.body;
 
+    const createProduct = new CreateProductService();
 
-      const { name, price, quantity } = request.body;
+    const product = await createProduct.execute({
+      name,
+      price,
+      quantity,
+    });
 
-      const createProduct = new CreateProductService();
-
-      const product = await createProduct.execute(
-        {
-          name,
-          price,
-          quantity
-        }
-      )
-
-      return response.json(product);
-
-
-
-
+    return response.json(product);
   }
-
 
   public async update(request: Request, response: Response) {
     const { name, price, quantity } = request.body;
@@ -64,24 +49,18 @@ export default class ProductsController {
     try {
       const updateProduct = new UpdateProductService();
 
-      const product = await updateProduct.execute(
-        {
-          id,
-          name,
-          price,
-          quantity
-        }
-      );
+      const product = await updateProduct.execute({
+        id,
+        name,
+        price,
+        quantity,
+      });
 
       return response.json(product);
     } catch (e: any) {
-      console.log(e.message)
+      console.log(e.message);
     }
-
-
-
   }
-
 
   public async delete(request: Request, response: Response) {
     const { id } = request.params;
@@ -91,8 +70,5 @@ export default class ProductsController {
     await deleteProduct.execute({ id });
 
     return response.json([]);
-
   }
-
-
 }

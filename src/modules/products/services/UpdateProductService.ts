@@ -1,17 +1,21 @@
-import AppError from "@shared/http/errors/AppError";
-import { getCustomRepository } from "typeorm";
-import Product from "../typeorm/entities/Product";
-import { ProductsRepository } from "../typeorm/repositories/ProductsRepository";
+import AppError from '@shared/http/errors/AppError';
+import { getCustomRepository } from 'typeorm';
+import Product from '../typeorm/entities/Product';
+import { ProductsRepository } from '../typeorm/repositories/ProductsRepository';
 
 class UpdateProductService {
-
-  public async execute({ id, name, price, quantity }: ICreateProductIDTO): Promise<Product > {
+  public async execute({
+    id,
+    name,
+    price,
+    quantity,
+  }: ICreateProductIDTO): Promise<Product> {
     const productsRepository = getCustomRepository(ProductsRepository);
 
     const product = await productsRepository.findOne(id);
 
     if (!product) {
-      throw new AppError('Not found  product', 404)
+      throw new AppError('Not found  product', 404);
     }
 
     const productExists = await productsRepository.findByName(name);
@@ -27,9 +31,7 @@ class UpdateProductService {
     await productsRepository.save(product);
 
     return product;
-
   }
-
 }
 
 export default UpdateProductService;
