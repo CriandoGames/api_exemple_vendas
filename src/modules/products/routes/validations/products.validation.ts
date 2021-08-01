@@ -1,5 +1,4 @@
 import { celebrate, Joi, Segments } from 'celebrate';
-import { JoinColumn } from 'typeorm';
 
 export const list = celebrate({
   [Segments.PARAMS]: {

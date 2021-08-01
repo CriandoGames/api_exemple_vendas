@@ -1,19 +1,14 @@
-import AppError from '@shared/http/errors/AppError';
 import { getCustomRepository } from 'typeorm';
 import User from '../typeorm/entities/User';
 import UsersRepository from '../typeorm/repositories/UsersRepository';
 
 class ListUserService {
   public async execute(): Promise<User[]> {
-    const userRepository = getCustomRepository(UsersRepository);
+    const usersRepository = getCustomRepository(UsersRepository);
 
-    const product = await userRepository.find();
+    const users = usersRepository.find();
 
-    if (!product) {
-      throw new AppError('Not found  products ', 404);
-    }
-
-    return product;
+    return users;
   }
 }
 
