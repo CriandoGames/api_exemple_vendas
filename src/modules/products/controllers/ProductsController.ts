@@ -6,7 +6,7 @@ import ShowProductService from '../services/ShowProductService';
 import UpdateProductService from '../services/UpdateProductService';
 
 export default class ProductsController {
-  public async index(request: Request, response: Response) {
+  public async index(request: Request, response: Response): Promise<Response> {
     const listProducts = new ListProductService();
 
     const products = await listProducts.execute();
@@ -14,21 +14,17 @@ export default class ProductsController {
     return response.json(products);
   }
 
-  public async show(request: Request, response: Response) {
-    try {
-      const { id } = request.params;
+  public async show(request: Request, response: Response): Promise<Response> {
+    const { id } = request.params;
 
-      const showProductService = new ShowProductService();
+    const showProductService = new ShowProductService();
 
-      const product = await showProductService.execute({ id });
+    const product = await showProductService.execute({ id });
 
-      return response.json(product);
-    } catch (e: any) {
-      console.log(e.message);
-    }
+    return response.json(product);
   }
 
-  public async create(request: Request, response: Response) {
+  public async create(request: Request, response: Response): Promise<Response> {
     const { name, price, quantity } = request.body;
 
     const createProduct = new CreateProductService();
@@ -42,27 +38,23 @@ export default class ProductsController {
     return response.json(product);
   }
 
-  public async update(request: Request, response: Response) {
+  public async update(request: Request, response: Response): Promise<Response> {
     const { name, price, quantity } = request.body;
     const { id } = request.params;
 
-    try {
-      const updateProduct = new UpdateProductService();
+    const updateProduct = new UpdateProductService();
 
-      const product = await updateProduct.execute({
-        id,
-        name,
-        price,
-        quantity,
-      });
+    const product = await updateProduct.execute({
+      id,
+      name,
+      price,
+      quantity,
+    });
 
-      return response.json(product);
-    } catch (e: any) {
-      console.log(e.message);
-    }
+    return response.json(product);
   }
 
-  public async delete(request: Request, response: Response) {
+  public async delete(request: Request, response: Response): Promise<Response> {
     const { id } = request.params;
 
     const deleteProduct = new DeleteProductService();
